@@ -6,10 +6,10 @@
 		"dockerfile": "Dockerfile",
 		"args": {
 			// Options
-			"INSTALL_NODE": "false",
+			"INSTALL_NODE": "true",
 			"NODE_VERSION": "lts/*",
-			"INSTALL_AZURE_CLI": "false",
-			"UPGRADE_PACKAGES": "false"
+			"INSTALL_AZURE_CLI": "true",
+			"UPGRADE_PACKAGES": "true"
 		}
 	},
 
@@ -20,7 +20,11 @@
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"Ionide.Ionide-fsharp",
-		"ms-dotnettools.csharp"
+		"ms-dotnettools.csharp",
+		"editorconfig.editorconfig",
+		"msjsdiag.debugger-for-chrome",
+		"ionide.ionide-fsharp",
+		"ms-vscode-remote.remote-containers"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
