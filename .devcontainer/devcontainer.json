@@ -28,7 +28,8 @@
     "forwardPorts": [
         8080,
         8081,
-        8085
+        8085,
+        8000
     ],
     // Use 'postCreateCommand' to run commands after the container is created.
     "postCreateCommand": "dotnet tool restore",

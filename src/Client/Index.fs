@@ -109,8 +109,8 @@ let view (model: Model) (dispatch: Msg -> unit) =
             Bulma.heroBody [
                 Bulma.container [
                     Bulma.column [
-                        column.is6
-                        column.isOffset3
+                        column.is8
+                        column.isOffset2
                         prop.children [
                             Bulma.title [
                                 text.hasTextCentered
