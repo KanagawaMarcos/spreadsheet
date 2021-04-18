@@ -6,6 +6,20 @@ open Shared
 
 type Model = { Todos: Todo list; Input: string }
 
+type Position = char * int
+
+type State =
+    { Cols: char list
+      Rows: int list
+      Cells: Map<Position, string>
+      Active: Position option }
+
+let initial =
+    { Rows = [ 1 .. 15 ]
+      Cols = [ 'A' .. 'K' ]
+      Active = None
+      Cells = Map.empty }
+
 type Msg =
     | GotTodos of Todo list
     | SetInput of string
