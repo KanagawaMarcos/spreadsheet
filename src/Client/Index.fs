@@ -14,7 +14,7 @@ type State =
       Cells: Map<Position, string>
       Active: Position option }
 
-let initial =
+let state =
     { Rows = [ 1 .. 15 ]
       Cols = [ 'A' .. 'K' ]
       Active = None
@@ -56,84 +56,19 @@ let update (msg: Msg) (model: Model) : Model * Cmd<Msg> =
         Cmd.none
 
 open Feliz
-open Feliz.Bulma
 
-let navBrand =
-    Bulma.navbarBrand.div [
-        Bulma.navbarItem.a [
-            prop.href "https://safe-stack.github.io/"
-            navbarItem.isActive
-            prop.children [
-                Html.img [
-                    prop.src "/favicon.png"
-                    prop.alt "Logo"
-                ]
-            ]
-        ]
-    ]
-
-let containerBox (model: Model) (dispatch: Msg -> unit) =
-    Bulma.box [
-        Bulma.content [
-            Html.ol [
-                for todo in model.Todos do
-                    Html.li [ prop.text todo.Description ]
-            ]
-        ]
-        Bulma.field.div [
-            field.isGrouped
-            prop.children [
-                Bulma.control.p [
-                    control.isExpanded
-                    prop.children [
-                        Bulma.input.text [
-                            prop.value model.Input
-                            prop.placeholder "What needs to be done?"
-                            prop.onChange (fun x -> SetInput x |> dispatch)
-                        ]
-                    ]
-                ]
-                Bulma.control.p [
-                    Bulma.button.a [
-                        color.isPrimary
-                        prop.disabled (Todo.isValid model.Input |> not)
-                        prop.onClick (fun _ -> dispatch AddTodo)
-                        prop.text "Add"
-                    ]
-                ]
-            ]
-        ]
-    ]
+let renderCell dispatch pos state = Html.td [ Html.p "|...|" ]
 
 let view (model: Model) (dispatch: Msg -> unit) =
-    Bulma.hero [
-        hero.isFullHeight
-        color.isPrimary
-        prop.style [
-            style.backgroundSize "cover"
-            style.backgroundImageUrl "https://unsplash.it/1200/900?random"
-            style.backgroundPosition "no-repeat center center fixed"
-        ]
-        prop.children [
-            Bulma.heroHead [
-                Bulma.navbar [
-                    Bulma.container [ navBrand ]
-                ]
+    Html.table [
+        yield
+            Html.tr [
+                yield Feliz.Html.th []
+                for col in state.Cols -> Feliz.Html.th [ Feliz.Html.h1 $"{col}" ]
             ]
-            Bulma.heroBody [
-                Bulma.container [
-                    Bulma.column [
-                        column.is8
-                        column.isOffset2
-                        prop.children [
-                            Bulma.title [
-                                text.hasTextCentered
-                                prop.text "spreadsheet"
-                            ]
-                            containerBox model dispatch
-                        ]
-                    ]
-                ]
+        for row in state.Rows ->
+            Html.tr [
+                yield Html.th [ Html.h1 $"{row}" ]
+                for col in state.Cols -> renderCell dispatch (col, row) state
             ]
-        ]
     ]
